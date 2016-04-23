@@ -1,0 +1,63 @@
+ <html>
+<head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/taxi.css">
+<link rel="icon" type="image/ico" href="images/taxi.ico" sizes="96x96">
+
+ 
+<title>{{title}}</title>
+<style>
+{% block styles%}
+body{
+  background:url("../images/taxi.jpg");
+}
+ 
+
+{% endblock %}
+</style>
+
+</head>
+
+ 
+
+<body>
+
+
+
+{% block body %}
+
+
+<h1>Welcome to IIITDM Taxi Portal </h1>
+<div id="form">
+<div id="existing">Existing User</div>
+<form action="/pwd" method="post" id="form_signin">
+
+<div id="user_login">Username: <input  placeholder="Username" id="text_input" type='text' name='username'></div><br>
+
+<button type='submit' id="proceed">Proceed</button>
+
+</form>
+
+<div id='divider'></div>
+<div id="new">New User</div>
+
+<form action="/signup" method="post" id="form_signup">
+
+
+<div id="user_signup">Username: <input id="text_input" type='text' name='username_sign'></div>
+
+
+<div id="pwd_signup">Password: <input id="pass_input" type='password' name='password_sign'></div>
+<div id="re_pwd_signup">Repeat-Password: <input id="pass_input" type='password' name='re_password_sign'></div>
+
+
+<button type="submit" id="signup">Its my first time here</button>
+ 
+</form>
+</div>
+{% endblock %}
+
+<footer>Made with &#9829 by Vedant Bassi</footer>
+
+</body>
+
+</html>

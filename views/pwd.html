@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+
+{% block styles%}
+body{
+  background:url("../images/taxi.jpg");
+}
+
+{% endblock %}
+
+
+{% block body %}
+
+<h1>Hi {{user_secure | title }}</h1>
+
+<div id="form_pwd">
+<form action="/show" method="post">
+
+<div id="pass_login">Password: <input id="pass_input" type='password' name='password'></div>
+ 
+<button type='submit' id="login_button">Log in</button>
+
+</form>
+
+</div>
+
+<h2 style="text-align:center; color:#FFF;">{{content1}}<br>{{content2}}</h2>
+
+{% endblock %}
+

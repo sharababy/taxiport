@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+
+{% block styles %}
+body{
+  background:url("../images/taxi.jpg");
+}
+
+{% endblock %}
+{% block body %}
+
+{{ super() }}
+
+<h2 style="text-align:center; color:#FFF; ">{{content1}}<br>{{content2}}</h2>
+
+
+{% endblock %}
+

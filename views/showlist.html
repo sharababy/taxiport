@@ -1,0 +1,66 @@
+{% extends "home.html"%}
+
+
+{% block styles %}
+body{
+	background:linear-gradient(to bottom,rgb(80,116,147	),rgb(156,114,70));
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+
+}
+ 
+{% endblock %}
+ 
+ 
+{% block body %}
+
+<div id="head">IIIT D&M TaxiPort</div>
+
+<div id="hi_user">Hi {{user | title}}
+</div>
+
+<nav ><a href="/test">New Ride</a><a href="/show">Schedule</a><a href="/">Logout</a></nav>
+
+{% block ridelist %}
+
+<div id="upcoming"><div id="upcoming_text">Upcoming rides</div>
+
+
+<div id="header_list">
+<span id="head_start">Starting Location</span>
+<span id="head_end">Ending Location</span>
+<span id="head_time">Date and Time</span>
+</div>
+<hr>
+<div id="upcoming_box">
+<hr>
+{% for item in items %}
+<a  href="/ride">
+
+ <div class="ride_link">
+
+ <span id="start">{{item.start}}{{item.time_ap}}</span><span id="end"> {{item.end}} </span> <span id="d_t">{{item.date_d}}/{{item.date_m}}/{{item.date_y}} at {{item.time_h}}:{{item.time_m}}</span>
+
+
+</div>
+
+</a>
+{% endfor %}
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+{% endblock %}
+
+
+{% endblock %}
+
+ 
