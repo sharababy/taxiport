@@ -75,13 +75,52 @@ var ip = req.headers['x-forwarded-for'] ||
      req.socket.remoteAddress ||
      req.connection.socket.remoteAddress;
 
-            req.session.destroy(function(err) {
-                   // cannot access session here
+if(!req.session.user){
+                             // cannot access session here
 
                         res.render('home',{'title':'IIIT D&M TaxiPort'});
                         console.log((ip+ " is at home page").custom);
 
+
+}
+
+else{
+ db.collection('taxi').find({"username":req.session.user},{_id:0}).toArray(function(err,docs){
+
+
+
+
+                                    db.collection('ride').find({},{"_id":0}).toArray(function(err,docs){
+
+
+
+
+
+                                            // res.send(count1);
+  
+                                           res.render('showlist',{'user':req.session.user , 'title':"IIIT DM TaxiPort",'items':docs});
+
+                                               
+                                                  
+
+                                       });
+
+                         
+
+                  });
+
+}
+
 });
+
+
+
+app.get('/logout',function(req,res){
+
+req.session.destroy();
+
+res.redirect('/');
+
 
 
 });
@@ -384,16 +423,16 @@ res.render("create_ride",{'user':req.session.user , 'title':"IIIT DM TaxiPort"})
 app.post("/added",function(req,res){
 
 
-var start = req.body.start;
-var end = req.body.end;
-var date_d = req.body.date_d;
-var date_m = req.body.date_m;
-var date_y = req.body.date_y;
+var start = (req.body.start).replace(/[^a-zA-Z1-9]/g,"");;
+var end = (req.body.end).replace(/[^a-zA-Z1-9]/g,"");;
+var date_d = (req.body.date_d).replace(/[^a-zA-Z1-9]/g,"");;
+var date_m = (req.body.date_m).replace(/[^a-zA-Z1-9]/g,"");;
+var date_y = (req.body.date_y).replace(/[^a-zA-Z1-9]/g,"");;
 
-var time_h = req.body.time_h;
-var time_m = req.body.time_m;
+var time_h = (req.body.time_h).replace(/[^a-zA-Z1-9]/g,"");;
+var time_m = (req.body.time_m).replace(/[^a-zA-Z1-9]/g,"");;
 
-var time_ap = req.body.time_input_h;
+var time_ap = req.body.a_p;
 
 
 var user= req.session.user;
@@ -446,6 +485,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(3000,function(){
   console.log("started at 3000".custom);
+  console.log("Hello ".custom);
 });
 
 

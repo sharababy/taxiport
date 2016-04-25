@@ -6,10 +6,8 @@
 }
 
  body{
-	width:100%;
-	height:100%;
+
      background-repeat: no-repeat;
-background-size: 100% 100%;
 }
 
 h1{
@@ -195,7 +193,7 @@ font-size: 23px;
 
 
 footer{
-  padding:5px;
+  padding:5px;  
   border:2px solid #fff;
   border-radius: 5px;
   background: #000;
@@ -203,7 +201,6 @@ color: #fff;
 text-align: center;
 font-size: 17px;
 position: absolute;
-bottom:-80px;
 left:50%;
 margin-left: -100px;
 
@@ -270,8 +267,6 @@ left:5%;
 width:90%;
 font-family: 'Ubuntu', sans-serif;
 
-
-
 }
 
 #upcoming_text{
@@ -285,10 +280,6 @@ color:#e6e6e6;
 
 #upcoming_box{
 margin-top: 5%;
-
-height: 55%;
-
-overflow: scroll;
 font-size:1.5vw;
 color:#cccccc;
 text-align: center;
@@ -391,7 +382,7 @@ font-size: 2vw;
 font-family:Sans-serif;
 color:#6699ff;
 position: absolute;
-top:13%;
+top:10%;
 width:100%
 }
 
@@ -454,7 +445,6 @@ color:#fff;
 height:30px;
 
 
-
 }
 .ride_link:hover{
 
@@ -462,3 +452,4 @@ background-color: #000;
 
 
 }
+

@@ -3,9 +3,11 @@
 
 {% block styles %}
 body{
+height:115%;
+width:100%;
 	background:linear-gradient(to bottom,rgb(80,116,147	),rgb(156,114,70));
     background-repeat:no-repeat;
-    background-size:100% 100%;
+background-size:100% 100%;
 
 }
  
@@ -19,7 +21,7 @@ body{
 <div id="hi_user">Hi {{user | title}}
 </div>
 
-<nav ><a href="/test">New Ride</a><a href="/show">Schedule</a><a href="/">Logout</a></nav>
+<nav ><a href="/test">New Ride</a><a href="/show">Schedule</a><a href="/logout">Logout</a></nav>
 
 {% block ridelist %}
 
@@ -33,13 +35,12 @@ body{
 </div>
 <hr>
 <div id="upcoming_box">
-<hr>
 {% for item in items %}
 <a  href="/ride">
 
  <div class="ride_link">
 
- <span id="start">{{item.start}}{{item.time_ap}}</span><span id="end"> {{item.end}} </span> <span id="d_t">{{item.date_d}}/{{item.date_m}}/{{item.date_y}} at {{item.time_h}}:{{item.time_m}}</span>
+ <span id="start">{{item.start}}</span><span id="end"> {{item.end}} </span> <span id="d_t">{{item.date_d}}/{{item.date_m}}/{{item.date_y}} at {{item.time_h}}:{{item.time_m}} {{item.time_ap}}</span>
 
 
 </div>
@@ -50,7 +51,6 @@ body{
 
 
 
-
 </div>
 
 
@@ -58,9 +58,45 @@ body{
 </div>
 
 
-{% endblock %}
-
 
 {% endblock %}
 
+
+<script type="text/javascript">
+	
+var upcoming =document.getElementById('upcoming') 
+
+var height= upcoming.clientHeight;
+
+var ucmg_top = upcoming.offsetTop;
+
+var footer= document.getElementByTagName('footer')[0];
+
+var foot = height + ucmg_top;
+
+console.log("Im working");
+
+if(foot > 1000){
+
+footer.style.top = foot + 100 + "px";
+
+footer.style.color = "blue";
+  
+
+}
+
+else {
+
+	footer.style.bottom = -80 + "px";
+footer.style.color = "red";
+
+
+}
+
+
+
+</script>
+
+
+{% endblock %}
  
