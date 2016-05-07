@@ -1,13 +1,13 @@
-{% extends "home.html"%}
+{% extends "home.html" %}
 
 
 {% block styles %}
 body{
-height:150%;
+height:115%;
 width:100%;
 	background:linear-gradient(to bottom,rgb(80,116,147	),rgb(156,114,70));
     background-repeat:no-repeat;
-    margin:0 auto;
+background-size:100% 100%;
 
 }
 
@@ -30,7 +30,7 @@ width:100%;
 
 {% block ridelist %}
 
-<div id="upcoming"><div id="upcoming_text">Upcoming rides</div>
+<div id="upcoming"><div id="upcoming_text">Your rides</div>
 
 
 <div id="header_list">
@@ -66,42 +66,4 @@ width:100%;
 
 {% endblock %}
 
-
-<script type="text/javascript">
-	
-var upcoming =document.getElementById('upcoming') 
-
-var height= upcoming.clientHeight;
-
-var ucmg_top = upcoming.offsetTop;
-
-var footer= document.getElementByTagName('footer')[0];
-
-var foot = height + ucmg_top;
-
-console.log("Im working");
-
-if(foot > 1000){
-
-footer.style.top = foot + 100 + "px";
-
-footer.style.color = "blue";
-  
-
-}
-
-else {
-
-	footer.style.bottom = -80 + "px";
-footer.style.color = "red";
-
-
-}
-
-
-
-</script>
-
-
 {% endblock %}
- 

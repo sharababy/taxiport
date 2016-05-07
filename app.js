@@ -447,6 +447,22 @@ db.collection('ride').insertOne({'start':start,'end':end,'date_d':date_d,'date_m
 });
 
 
+app.get("/dashboard",function(req,res){
+
+
+var user= req.session.user;
+
+
+db.collection('ride').find({"username":user},{_id:0}).toArray(function(err,docs){
+
+res.render('dashboard',{'user':req.session.user , 'title':"IIIT DM TaxiPort",'items':docs});
+
+
+});
+
+});
+
+
 
 
 
