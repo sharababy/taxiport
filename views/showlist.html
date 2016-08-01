@@ -3,7 +3,7 @@
 
 {% block styles %}
 body{
-height:150%;
+
 width:100%;
 	background:linear-gradient(to bottom,rgb(80,116,147	),rgb(156,114,70));
     background-repeat:no-repeat;
@@ -11,7 +11,7 @@ width:100%;
 
 }
 
-
+ 
  footer{
  display:none;
  }
@@ -34,18 +34,20 @@ width:100%;
 
 
 <div id="header_list">
-<span id="head_start">Starting Location</span>
-<span id="head_end">Ending Location</span>
+<span id="head_start">Depart From</span>
+<span id="head_end">Destination</span>
 <span id="head_time">Date and Time</span>
 </div>
 <hr>
 <div id="upcoming_box">
+
 {% for item in items %}
-<a  href="/ride">
+
+<a  href= {{ "/ride/" + item._id}} >
 
  <div class="ride_link">
 
- <span id="start">{{item.start}}</span><span id="end"> {{item.end}} </span> <span id="d_t">{{item.date_d}}/{{item.date_m}}/{{item.date_y}} at {{item.time_h}}:{{item.time_m}} {{item.time_ap}}</span>
+ <span id="start">{{item.start}}</span><span id="end"> {{item.end}} </span> <span id="d_t">{{item.date_d}} of {{item.date_m}} 20{{item.date_y}} at {{item.time_h}} : {{item.time_m}} {{item.time_ap}}</span> 
 
 
 </div>
@@ -67,41 +69,7 @@ width:100%;
 {% endblock %}
 
 
-<script type="text/javascript">
 	
-var upcoming =document.getElementById('upcoming') 
-
-var height= upcoming.clientHeight;
-
-var ucmg_top = upcoming.offsetTop;
-
-var footer= document.getElementByTagName('footer')[0];
-
-var foot = height + ucmg_top;
-
-console.log("Im working");
-
-if(foot > 1000){
-
-footer.style.top = foot + 100 + "px";
-
-footer.style.color = "blue";
-  
-
-}
-
-else {
-
-	footer.style.bottom = -80 + "px";
-footer.style.color = "red";
-
-
-}
-
-
-
-</script>
-
 
 {% endblock %}
  

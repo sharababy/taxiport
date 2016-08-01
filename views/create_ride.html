@@ -13,7 +13,7 @@ body{
 
 {% endblock %}
  
-
+ 
 
  {% block body %}
 {{super()}}
@@ -24,17 +24,140 @@ body{
 <div id="new_ride_form">
 <h2 style="text-align:center">Create New Ride query</h2>
 
-<form method="post" action="/added" >
+<form name="form1" method="post" action="/added" onsubmit="return check()">
 
-<div id="starting_pt">Starting point: <input id="start_input" type="text" name="start" value="IIIT DM"></div>
+<div id="starting_pt">Depart from: <select class="start_input" name="start" value="IIIT DM">
 
-<div id="destination">Destination: <input id="end_input" type="text" name="end" ></div>
 
-<div id="date">Date : <input id="dd_input" type="text" name="date_d" placeholder="dd"> <input id="mm_input" type="text" name="date_m" placeholder="mm"> <input id="yy_input" type="text" name="date_y" placeholder="yy"></div>
+          <option value = "IIIT DM - Gate">IIIT DM - Gate</option>
+          <option value = "Kandigai">Kandigai</option>
+          <option value = "IIIT DM - Ashwatha">IIIT DM-Ashwatha</option>
+          <option value = "IIIT DM - Banyan">IIIT DM-Banyan</option>
+          <option value = "Kelamabakkam">Kelambakkam</option>
 
-<div id="time">Time of Ride: <input id="time_input_h" type="text" name="time_h" value="5"> : <input id="time_input_h" type="text" name="time_m" value="00">
+          <option value = "Tambaram">Tambaram</option>
+          <option value = "Chennai Central Station">Chennai Central Station</option>
+          <option value = "Chennai Airport">Chennai Airport</option>
 
-<select name="a_p" id="time_input_h"  >
+
+          </select>
+
+
+</div>
+
+<div id="destination">Destination: <select class="end_input" name="end" >
+
+
+          <option value = "Kandigai">Kandigai</option>
+                  <option value = "IIIT DM - Gate">IIIT DM - Gate</option>
+
+          <option value = "IIIT DM - Ashwatha">IIIT DM-Ashwatha</option>
+          <option value = "IIIT DM - Banyan">IIIT DM-Banyan</option>
+          <option value = "Kelamabakkam">Kelambakkam</option>
+
+          <option value = "Tambaram">Tambaram</option>
+          <option value = "Chennai Central Station">Chennai Central Station</option>
+          <option value = "Chennai Airport">Chennai Airport</option>
+
+
+          </select>
+
+
+
+</div>
+
+<div id="date">Date : <select class="dd_input" name="date_d"> 
+
+          <option value = "01">01</option>
+          <option value = "02">02</option>
+          <option value = "03">03</option>
+          <option value = "04">04</option>
+          <option value = "05">05</option>
+          <option value = "06">06</option>
+          <option value = "07">07</option>
+          <option value = "08">08</option>
+          <option value = "09">09</option>
+          <option value = "10">10</option>
+          <option value = "11">11</option>
+          <option value = "12">12</option>
+          <option value = "13">13</option>
+          <option value = "14">14</option>
+          <option value = "15">15</option>
+          <option value = "16">16</option>
+          <option value = "17">17</option>
+          <option value = "18">18</option>
+          <option value = "19">19</option>
+          <option value = "20">20</option>
+          <option value = "21">21</option>
+          <option value = "22">22</option>
+          <option value = "23">23</option>
+          <option value = "24">24</option>
+          <option value = "25">25</option>
+          <option value = "26">26</option>
+          <option value = "27">27</option>
+          <option value = "28">28</option>
+          <option value = "29">29</option>
+          <option value = "30">30</option>
+          <option value = "31">31</option>
+
+
+
+</select>
+<select class="mm_input" name="date_m" >
+          <option value = "January">January</option>
+          <option value = "February">February</option>
+          <option value = "March">March</option>
+          <option value = "April">April</option>
+          <option value = "May">May</option>
+          <option value = "June">June</option>
+          <option value = "July">July</option>
+
+          <option value = "August">August</option>
+          <option value = "September">September</option>
+          
+          <option value = "October">October</option>
+          <option value = "November">November</option>
+          <option value = "December">December</option>
+          
+</select> <select class="yy_input"  name="date_y" >
+
+
+          <option value = "16">2016</option>
+
+
+</select>
+
+</div>
+
+<div id="time">Time of Ride: <select class="time_input_h" type="text" name="time_h" value="5"> 
+
+          <option value = "01">1</option>
+          <option value = "02">2</option>
+          <option value = "03">3</option>
+          <option value = "04">4</option>
+          <option value = "05">5</option>
+          <option value = "06">6</option>
+          <option value = "07">7</option>
+
+          <option value = "08">8</option>
+          <option value = "09">9</option>
+          
+          <option value = "10">10</option>
+          <option value = "11">11</option>
+          <option value = "12">12</option>
+
+</select>
+
+          : <select class="time_input_m" type="text" name="time_m" value="30">
+
+
+          <option value = "OO">'o' clock</option>
+          <option value = "15">15</option>
+          <option value = "30">30</option>
+          <option value = "45">45</option>
+          </select>
+
+<select name="a_p" class="time_input_h" value="pm" >
 
           <option value = "am">am</option>
           <option value = "pm">pm</option>
@@ -52,4 +175,28 @@ body{
 
 
 {% endblock %}
- {% endblock %}}
+
+
+<script type="text/javascript">
+	
+var start=document.forms["form1"]["start"].value;
+var end=document.forms["form1"]["end"].value;
+
+
+function check(){
+
+if(start==end){
+  
+	window.alert("Invalid Destination or Departure point");
+    
+    return false;
+}
+
+}
+
+
+</script>
+
+
+
+ {% endblock %}

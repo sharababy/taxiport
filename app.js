@@ -13,8 +13,6 @@ var mongoose = require('mongoose');
 var colors=require('colors');
 var MongoClient = require('mongodb').MongoClient;
 
-var moment= require('moment');
-
 
 
 //var passport = require('passport')
@@ -114,7 +112,7 @@ else{
 });
 
 
-
+ 
 app.get('/logout',function(req,res){
 
 req.session.destroy();
@@ -165,6 +163,7 @@ var ip = req.headers['x-forwarded-for'] ||
 
 
                               else{
+                                   req.session.destroy();
 
                                   res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"No Such User Found", 'content2':"Note: Characters other than a-z A-Z 1-9 are not allowed "});
                                     console.log((ip+ " has enterd an invalid user").custom);
@@ -177,6 +176,7 @@ var ip = req.headers['x-forwarded-for'] ||
                 }
 
                 else{
+                  req.session.destroy();
 
                   res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"Plese enter a username ", 'content2':"Note: Characters other than a-z A-Z 1-9 are not allowed "});
 
@@ -200,14 +200,14 @@ app.get('/show',function(req,res,done){
   console.log((ip+ "accessed main portal via new ride page").custom);
 
 
-            if(req.session.user!=""){
+            if(req.session.user){
 
                         db.collection('taxi').find({"username":req.session.user},{_id:0}).toArray(function(err,docs){
 
 
 
 
-                                    db.collection('ride').find({},{"_id":0}).toArray(function(err,docs){
+                                    db.collection('ride').find({}).toArray(function(err,docs){
 
 
 
@@ -228,7 +228,10 @@ app.get('/show',function(req,res,done){
          }
 
   else{
-    res.send("Shit happened");
+    res.redirect("/");
+    console.log((ip+ " tried to enter without credentials").custom);
+
+
   }
 
 
@@ -251,6 +254,9 @@ app.post('/show',function(req,res,done){
 
                         var pass_secure = pass.replace(/[^a-zA-Z1-9]/g,"");
 
+    if(req.session.user){
+
+
             if(pass_secure!=""){
 
                         db.collection('taxi').find({"username":req.session.user},{_id:0}).toArray(function(err,docs){
@@ -266,11 +272,10 @@ app.post('/show',function(req,res,done){
                           req.session.authenticated = true;
    
 
-                                     var date = moment();
-
+                                     
      
 
-                                    db.collection('ride').find({},{"_id":0}).toArray(function(err,docs){
+                                    db.collection('ride').find({}).toArray(function(err,docs){
 
 
 
@@ -315,7 +320,14 @@ app.post('/show',function(req,res,done){
 
                 }
 
+}
 
+else{
+                  res.redirect("/"); 
+                   console.log((ip+ " is trying to get in without credentials").custom);
+
+
+}
 
 
 });
@@ -335,68 +347,73 @@ var re_pass_sign = req.body.re_password_sign;
 
 var user_sign = req.body.username_sign;
 
+var ph = req.body.ph_no;
 
-var pass_secure = pass_sign.replace(/[^a-zA-Z1-9]/g,"");
+var pass_secure = pass_sign.replace(/[^a-zA-Z0-9]/g,"");
 
-var re_pass_secure = re_pass_sign.replace(/[^a-zA-Z1-9]/g,"");
+var re_pass_secure = re_pass_sign.replace(/[^a-zA-Z0-9]/g,"");
 
-var user_sign_secure = user_sign.replace(/[^a-zA-Z1-9]/g,"");
+var user_sign_secure = user_sign.replace(/[^a-zA-Z0-9]/g,"");
 
+var ph_secure = ph.replace(/[^0-9]/g,"");
 
 req.session.user_sign = user_sign_secure;
 
 req.session.pass_sign = pass_secure;
 
+req.session.ph = ph_secure;
 
 req.session.re_pass_sign = re_pass_secure;
 
 
-if(pass_secure!="" && re_pass_secure!=""){
+if(pass_secure!="" && re_pass_secure!="" && ph_secure!=""){
+ 
+       if(pass_secure==re_pass_secure)
+          {
 
-if(pass_secure==re_pass_secure)
-{
-
-
-db.collection('taxi').find({"username":req.session.user_sign},{_id:0}).toArray(function(err,docs){
-
-
-var count = docs.length;
+            db.collection('taxi').find({"username":req.session.user_sign},{_id:0}).toArray(function(err,docs){
 
 
-if(count==0){
+                var count = docs.length;
+
+
+                   if(count==0){
 
 
 
-db.collection('taxi').insertOne({"username":req.session.user_sign, "password":pass_secure});
+                      db.collection('taxi').insertOne({"username":req.session.user_sign, "password":pass_secure , "phone":req.session.ph});
 
-res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"You have been successfully registered", 'content2':"Please login below"});
+                      res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"You have been successfully registered", 'content2':"Please login below"});
 
-console.log((ip+ " is regesitered").custom);
+                      console.log((ip+ " is regesitered").custom);
 
-//res.render('return_home',{'title':'IIIT DM Taxi portal'});
-}
+                         }
+
+                   else{
+                     req.session.destroy();
+
+                     res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"This usename already exists ", 'content2':"Please login with existing account"});
+
+                    console.log((ip+ " is trying to sign up again using same username").custom);
+
+                    }
+
+            });
+
+          }
 
 else{
+     req.session.destroy();
 
-res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"This usename already exists ", 'content2':"Please login with existing account"});
 
-console.log((ip+ " is trying to sign up again using same username").custom);
+        res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"The entered passwords donot match", 'content2':"Note: Characters other than a-z A-Z 1-9 are not allowed "});
 
-}
-
-});
-
-}
-
-else{
-
-res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"The entered passwords donot match", 'content2':"Note: Characters other than a-z A-Z 1-9 are not allowed "});
-
-console.log((ip+ " has entered non-matching passwords").custom);
+        console.log((ip+ " has entered non-matching passwords or Phone Number in invalid").custom);
 
 }
 }
 else{ 
+  req.session.destroy();
 
   res.render('return_home',{'title':"IIIT TaxiPort", 'content1':"You cannot leave password field empty", 'content2':"Note: Characters other than a-z A-Z 1-9 are not allowed "});
 
@@ -423,8 +440,8 @@ res.render("create_ride",{'user':req.session.user , 'title':"IIIT DM TaxiPort"})
 app.post("/added",function(req,res){
 
 
-var start = (req.body.start).replace(/[^a-zA-Z1-9]/g,"");;
-var end = (req.body.end).replace(/[^a-zA-Z1-9]/g,"");;
+var start = (req.body.start);
+var end = (req.body.end);
 var date_d = (req.body.date_d).replace(/[^a-zA-Z1-9]/g,"");;
 var date_m = (req.body.date_m).replace(/[^a-zA-Z1-9]/g,"");;
 var date_y = (req.body.date_y).replace(/[^a-zA-Z1-9]/g,"");;
@@ -453,7 +470,7 @@ app.get("/dashboard",function(req,res){
 var user= req.session.user;
 
 
-db.collection('ride').find({"username":user},{_id:0}).toArray(function(err,docs){
+db.collection('ride').find({"username":user}).toArray(function(err,docs){
 
 res.render('dashboard',{'user':req.session.user , 'title':"IIIT DM TaxiPort",'items':docs});
 
@@ -461,6 +478,30 @@ res.render('dashboard',{'user':req.session.user , 'title':"IIIT DM TaxiPort",'it
 });
 
 });
+
+app.get("/ride/:id_no",function(req,res){
+
+var id= "ObjectId(\""+req.params.id_no+"\")";
+
+
+
+console.log(id+ "\n");
+
+db.collection('ride').find({'_id':id}).toArray(function(err,docs){
+
+console.log(docs.length+ "\n");
+
+res.render("ride",{'user':req.session.user , 'title':"IIIT DM TaxiPort",'rides':docs[0],'id':id});
+
+
+
+});
+
+
+
+
+});
+
 
 
 

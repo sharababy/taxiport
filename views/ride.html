@@ -1,0 +1,48 @@
+{% extends "home.html"%}
+
+{% block styles %}
+body{
+
+width:100%;
+	background:linear-gradient(to bottom,rgb(80,116,147	),rgb(156,114,70));
+    background-repeat:no-repeat;
+    margin:0 auto;
+
+}
+
+ 
+ footer{
+ display:none;
+ }
+ 
+{% endblock %}
+
+{% block body %}
+
+<div id="head">IIIT D&M TaxiPort</div>
+
+<div id="hi_user">Hi {{user | title}}
+</div>
+
+<nav ><a href="/test">New Ride</a><a href="/show">Schedule</a><a href="/logout">Logout</a></nav>
+
+
+<div id="ride_details">
+
+  This ride was created by {{rides}}
+<br>
+  Departing Point : {{rides.start}}<br>
+  Destination : {{id}}<br>
+  Date of Ride : {{ride.date_d}} of {{date_m}} 20{{ride.date_y}}<br>
+  Time : {{ride.time_h}} : {{ride.time_m}} {{ride.time_ap}}
+
+
+
+</div>
+
+
+
+	
+
+{% endblock %}
+ 
